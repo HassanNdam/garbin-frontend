@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "jsx": "react-jsx",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./src/*"],
+      // "@assets/*": ["./src/assets/*"],
+      // "@layouts/*": ["./src/layouts/*"],
+      // "@components/*": ["./src/components/*"],
+      // "@features/*": ["./src/features/*"],
+      // "@models/*": ["./src/models/*"],
+      // "@services/*": ["./src/services/*"],
+      // "@utils/*": ["./src/utils/*"],
+      // "@lib/*": ["./src/lib/*"],
+      // "@components": ["./src/components"],
+      // "@context": ["./src/context"],
+    },
+    "outDir": "./dist",
+    "rootDir": "./src"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+  // "files": [],
+  // "references": [
+  //   { "path": "./tsconfig.app.json" },
+  //   { "path": "./tsconfig.node.json" }
+  // ]
+}

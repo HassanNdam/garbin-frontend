@@ -1,0 +1,46 @@
+/* .scrol ::-webkit-scrollbar{
+width: 400px;
+} */
+
+.scrol::-webkit-scrollbar {
+    width: 12px;
+}
+/* Style des boutons (haut et bas) */
+
+.scrol::-webkit-scrollbar-button {
+    background: var(--secondary);
+    height: 16px;
+    border: 1px solid #ddd;
+}
+
+/* Hover sur les boutons */
+
+.scrol::-webkit-scrollbar-button:hover {
+    background: var(--secondary);
+}
+
+
+/* Style du track (fond) de la scrollbar */
+.scrol::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+/* Style du thumb (la partie mobile) de la scrollbar  */
+.scrol::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 10px;
+    border: 1px solid #f1f1f1;
+}
+
+/* Style spécifique pour le bouton haut */
+.scrol::-webkit-scrollbar-button:start {
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+/* Style spécifique pour le bouton bas */
+.scrol::-webkit-scrollbar-button:end {
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}

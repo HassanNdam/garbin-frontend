@@ -1,0 +1,27 @@
+input {
+    min-width: fit-content;
+}
+
+.filter {
+    background-color: var(--secondary);
+    padding: .5rem 1rem;
+    border-radius: 30px;
+    color: white;
+    cursor: pointer;
+}
+
+.filter:hover {
+    background-color: var(--primary);
+}
+
+.filter.active {
+    background-color: var(--primary);
+    font-weight: 600;
+}
+
+.garmentCard {
+    background-color: white;
+    border-radius: 20px;
+    cursor: pointer;
+    padding: 1rem;
+}

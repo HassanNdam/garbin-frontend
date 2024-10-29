@@ -1,0 +1,17 @@
+node_modules
+dist
+build
+coverage
+*.config.js
+vite.config.ts
+tsconfig.node.json
+.eslintrc.js
+.prettierrc
+eslint.config.js
+index.html
+jest.config.js
+package.json
+playwright-report
+README.md
+test-results
+tests-examples

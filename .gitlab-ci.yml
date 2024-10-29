@@ -1,0 +1,97 @@
+variables:
+  DOCKER_IMAGE: "soufcode/garbin-frontend"
+
+stages:
+  - unit_test
+  - e2e_test
+  - build
+  - deploy
+
+run_tests:
+  stage: unit_test
+  tags:
+    - general
+  before_script:
+    - apt-get update && apt-get install make
+  script:
+    - make test_unit
+  artifacts:
+    paths:
+      - client
+  rules:
+    - if: '$CI_COMMIT_BRANCH'
+
+run_e2e_tests:
+  stage: e2e_test
+  image: mcr.microsoft.com/playwright:v1.48.1-noble
+  tags:
+    - general
+  before_script:
+    - apt-get update --fix-missing && apt-get install make
+  script:
+    - make test_e2e
+  artifacts:
+    paths:
+      - client
+  rules:
+    - if: '$CI_COMMIT_BRANCH'
+  
+build_staging:
+  stage: build
+  image: docker:27
+  services:
+    - docker:27-dind
+  tags:
+    - general
+  before_script:
+    - docker login -u $DOCKER_USER -p $DOCKER_PWD
+  script:
+    - docker build -t $DOCKER_IMAGE:staging -f ./client/docker/Dockerfile.staging .
+    - docker push $DOCKER_IMAGE:staging
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "dev"'
+
+deploy_staging:
+  stage: deploy
+  image: docker:27
+  services:
+    - docker:27-dind
+  tags:
+    - general
+  before_script:
+    - chmod 400 $SSH_KEY
+  script:
+  - ssh -o StrictHostKeyChecking=no -i $SSH_KEY frontend@51.158.70.199 "
+      bash -l -c 'docker compose -f ./staging/docker-compose.yml pull && docker compose -f ./staging/docker-compose.yml up -d'"
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "dev"'
+
+build_prod:
+  stage: build
+  image: docker:27
+  services:
+    - docker:27-dind
+  tags:
+    - general
+  before_script:
+    - docker login -u $DOCKER_USER -p $DOCKER_PWD
+  script:
+    - docker build -t $DOCKER_IMAGE:prod -f ./client/docker/Dockerfile.prod .
+    - docker push $DOCKER_IMAGE:prod
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+
+deploy_prod:
+  stage: deploy
+  image: docker:27
+  services:
+    - docker:27-dind
+  tags:
+    - general
+  before_script:
+    - chmod 400 $SSH_KEY
+  script:
+  - ssh -o StrictHostKeyChecking=no -i $SSH_KEY frontend@51.158.70.199 "
+      bash -l -c 'docker compose -f ./prod/docker-compose.yml pull && docker compose -f ./prod/docker-compose.yml up -d'"
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'

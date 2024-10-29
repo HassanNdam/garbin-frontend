@@ -1,0 +1,16 @@
+version: '3.9'
+
+services:
+  garbin-client-dev:
+    container_name: garbin-client-dev
+    build: 
+      context: .
+      dockerfile: ./client/docker/Dockerfile.dev
+    command: /bin/bash -c "while sleep 1000; do :; done"
+    working_dir: /home/client
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./client:/home/client:cached
+      - /home/client/node_modules # Optionally, exclude node_modules from the volume
+  
